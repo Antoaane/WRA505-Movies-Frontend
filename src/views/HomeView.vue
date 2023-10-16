@@ -1,43 +1,43 @@
 <script setup>
-    import { onMounted, ref, watch } from 'vue'
-    import axios from 'axios'
+import {onMounted, ref} from 'vue'
+import CardActeur from "@/components/CardActeur.vue";
+import CardFilm from "@/components/CardFilm.vue";
 
-    let data = ref('')
-    // let recherche = ref('')
-    let dataFull = ref('')
+const movies = ref('')
+const data = ref('')
+const actors = ref('')
 
-    onMounted(async () => {
-      const response = await axios.get('http://127.0.0.1:8000/api/movies', {
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json'
-        }
-      })
-      data.value = response.data
-      dataFull.value = response.data
-    })
+onMounted(async () => {
+  fetch('http://localhost/index.php/api/actors')
+    .then(response => response.json())
+    .then(data => {
+      actors.value = data['hydra:member'];
+  });
 
-    // watch(recherche, () => {
-    //     filtrerPays()
-    // })
-
-    // function filtrerPays() {
-    //     data.value = dataFull.value.filter(pays => pays.name.common.toLowerCase().includes(recherche.value.toLowerCase()))
-    // }
-</script> 
+  fetch('http://localhost/index.php/api/movies')
+      .then(response => response.json())
+      .then(data => {
+        movies.value = data['hydra:member'];
+      });
+});
+</script>
 
 <template>
-    <section>
-        <h1>Pays</h1>
-        <!-- <input type="text" v-model="recherche"> -->
-        <!-- <button :on-click="filtrerPays()">Recherher</button> -->
-        <router-link :to="`/movies/${movie.title}`" v-for="movie in data" :key="movie.title">
-            {{ movie.title }} <br>
-            {{ movie.description }} <br>
-            {{ movie.releaseDate }} <br>
-        </router-link>
-        <!-- <pre>
-            {{ data }}
-        </pre> -->
-    </section>
+  <main>
+    <h2>Films</h2>
+    <div v-if="movies" class="flex">
+      <template v-for="movie in movies.slice(0,4)">
+        <CardFilm :movie="movie"></CardFilm>
+      </template>
+    </div>
+    <div v-else>Chargement des données...</div>
+
+    <h2>Acteurs</h2>
+    <div v-if="actors" class="flex">
+      <template v-for="act in actors.slice(0,4)">
+        <CardActeur :actor="act"></CardActeur>
+      </template>
+    </div>
+    <div v-else>Chargement des données...</div>
+  </main>
 </template>
