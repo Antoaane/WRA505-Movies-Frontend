@@ -31,7 +31,7 @@
         <h1>Pays</h1>
         <!-- <input type="text" v-model="recherche"> -->
         <!-- <button :on-click="filtrerPays()">Recherher</button> -->
-        <router-link :to="`/movies/${movie.title}`" v-for="movie in data" :key="movie.title">
+        <router-link :to="`/movie/${movie.title}`" v-for="movie in data" :key="movie.id">
             {{ movie.title }} <br>
             {{ movie.description }} <br>
             {{ movie.releaseDate }} <br>
