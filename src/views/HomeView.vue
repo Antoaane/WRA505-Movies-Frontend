@@ -24,7 +24,7 @@ onMounted(async () => {
 
 <template>
   <main>
-    <h2>Films</h2>
+    <!-- <h2>Films</h2>
     <div v-if="movies" class="flex">
       <template v-for="movie in movies.slice(0,4)">
         <CardFilm :movie="movie"></CardFilm>
@@ -38,6 +38,7 @@ onMounted(async () => {
         <CardActeur :actor="act"></CardActeur>
       </template>
     </div>
-    <div v-else>Chargement des données...</div>
+    <div v-else>Chargement des données...</div> -->
+    <p>hello world</p>
   </main>
 </template>
