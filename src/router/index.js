@@ -1,7 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/HomeView.vue'
 import MoviesView from '../views/MoviesView.vue'
-// import MovieDetailView from '../views/MovieDetailView.vue'
+import MovieCard from '../views/MovieCard.vue'
 import CategoriesView from '../views/CategoriesView.vue'
 import ActorsView from '../views/ActorsView.vue'
 
@@ -18,11 +18,12 @@ const router = createRouter({
       name: 'movies',
       component: MoviesView
     },
-    // {
-    //   path: '/movies/:id',
-    //   name: 'movies',
-    //   component: MovieDetailView
-    // },
+    {
+      path: '/movies/:id',
+      name: 'movie-card',
+      component: MovieCard,
+      props: true // Active la transmission des props via l'URL
+    },
     {
       path: '/categories',
       name: 'categories',

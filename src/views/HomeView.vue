@@ -1,33 +1,43 @@
 <script setup>
-    import { onMounted, ref, watch } from 'vue'
+    import { onMounted, ref } from 'vue'
     import axios from 'axios'
 
-    let data = ref('')
-    let dataFull = ref('')
+    let dataMovies = ref('')
+    let dataActors = ref('')
 
     onMounted(async () => {
-      const response = await axios.get('http://localhost/index.php/api/movies', {
+      const responseMovies = await axios.get('http://localhost/index.php/api/movies', {
         headers: {
           'Accept': 'application/json'
         }
       })
-      data.value = response.data
-      dataFull.value = response.data
+      const responseActors = await axios.get('http://localhost/index.php/api/actors', {
+        headers: {
+          'Accept': 'application/json'
+        }
+      })
+      dataMovies.value = responseMovies.data
+      dataActors.value = responseActors.data
     })
 
-    console.log(data)
+    console.log(dataActors)
 </script> 
 
 <template>
     <section>
-        <h1>Pays</h1>
-        <router-link :to="`/movies/${movie.id}`" v-for="movie in data" :key="movie.id">
-            {{ movie.title }} <br>
-            {{ movie.description }} <br>
-            {{ movie.releaseDate }} <br>
+        <h1>Home</h1>
+        <h2>Movies</h2>
+        <router-link :to="`/movies/${movie.id}`" v-for="movie in dataMovies.slice(0, 4)" :key="movie.id">
+          {{ movie.title }} <br>
+          {{ movie.description }} <br>
+          {{ movie.releaseDate }} <br>
         </router-link>
-        <!-- <pre>
-            {{ data }}
-        </pre> -->
+        <h2>Actors</h2>
+        <router-link :to="`/actors/${actor.id}`" v-for="actor in dataActors.slice(0, 4)" :key="actor.id">
+          {{ actor.firstName }} <br>
+          {{ actor.lastName }} <br>
+          {{ actor.nationalite }} <br>
+        </router-link>
+
     </section>
 </template>
