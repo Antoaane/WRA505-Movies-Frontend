@@ -3,6 +3,7 @@ import HomeView from '../views/HomeView.vue'
 // import LoginView from '../views/LoginView.vue'
 import MoviesView from '../views/MoviesView.vue'
 import MovieCard from '../views/MovieCard.vue'
+import ActorCard from '../views/ActorCard.vue'
 import CategoriesView from '../views/CategoriesView.vue'
 import ActorsView from '../views/ActorsView.vue'
 
@@ -28,6 +29,12 @@ const router = createRouter({
       path: '/movies/:id',
       name: 'movie-card',
       component: MovieCard,
+      props: true
+    },
+    {
+      path: '/actors/:id',
+      name: 'actor-card',
+      component: ActorCard,
       props: true
     },
     {

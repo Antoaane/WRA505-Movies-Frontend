@@ -24,15 +24,20 @@
 </script> 
 
 <template>
+
     <section>
+
         <h1>Home</h1>
         <h2>Movies</h2>
+
         <router-link :to="`/movies/${movie.id}`" v-for="movie in dataMovies.slice(0, 4)" :key="movie.id">
           {{ movie.title }} <br>
           {{ movie.description }} <br>
           {{ movie.releaseDate }} <br>
         </router-link>
+
         <h2>Actors</h2>
+        
         <router-link :to="`/actors/${actor.id}`" v-for="actor in dataActors.slice(0, 4)" :key="actor.id">
           {{ actor.firstName }} <br>
           {{ actor.lastName }} <br>
@@ -40,4 +45,5 @@
         </router-link>
 
     </section>
+
 </template>
