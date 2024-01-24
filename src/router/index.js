@@ -3,9 +3,9 @@ import HomeView from '../views/HomeView.vue'
 // import LoginView from '../views/LoginView.vue'
 import MoviesView from '../views/MoviesView.vue'
 import MovieCard from '../views/MovieCard.vue'
+import ActorsView from '../views/ActorsView.vue'
 import ActorCard from '../views/ActorCard.vue'
 import CategoriesView from '../views/CategoriesView.vue'
-import ActorsView from '../views/ActorsView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
