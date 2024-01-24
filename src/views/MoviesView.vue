@@ -7,7 +7,7 @@
     let dataFull = ref('');
 
     async function getFilms() {
-        const response = await axios.get('http://localhost/index.php/api/movies', {
+        const response = await axios.get('http://127.0.0.1:8000/api/movies', {
             headers: {
                 'Accept': 'application/json'
             }
@@ -50,7 +50,7 @@
     }
 
     function editMovieTitle(movieId) {
-        axios.patch(`http://localhost/index.php/api/movies/${movieId}`, {
+        axios.patch(`http://127.0.0.1:8000/api/movies/${movieId}`, {
             title: filmTitle.value
         }, {
             headers: {

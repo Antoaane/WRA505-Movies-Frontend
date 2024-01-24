@@ -9,7 +9,7 @@ const route = useRoute();
 onMounted(async () => {
     const movieId = route.params.id;
     console.log(movieId);
-    const response = await axios.get(`http://localhost/index.php/api/movies/${movieId}`, {
+    const response = await axios.get(`http://127.0.0.1:8000/api/movies/${movieId}`, {
         headers: {
             'Accept': 'application/json'
         }
@@ -24,6 +24,5 @@ onMounted(async () => {
         <p>Description: {{ data.description }}</p>
         <p>Release Date: {{ data.releaseDate }}</p>
         <p>Duration: {{ data.duration }} min</p>
-        <!-- Ajoute d'autres détails du film selon tes besoins -->
     </div>
 </template>

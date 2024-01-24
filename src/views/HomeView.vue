@@ -6,12 +6,12 @@
     let dataActors = ref('')
 
     onMounted(async () => {
-      const responseMovies = await axios.get('http://localhost/index.php/api/movies', {
+      const responseMovies = await axios.get('http://127.0.0.1:8000/api/movies', {
         headers: {
           'Accept': 'application/json'
         }
       })
-      const responseActors = await axios.get('http://localhost/index.php/api/actors', {
+      const responseActors = await axios.get('http://127.0.0.1:8000/api/actors', {
         headers: {
           'Accept': 'application/json'
         }
