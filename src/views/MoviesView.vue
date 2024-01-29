@@ -29,6 +29,9 @@
 
     let editedMovieId = ref('');
     let filmTitle = ref('');
+    let filmDescription = ref('');
+    let filmReleaseDate = ref('');
+    let filmDuration = ref('');
 
     function filtrerPays() {
         if (dataFull.value) {
@@ -40,6 +43,9 @@
         document.querySelector('.form-container').style.display = 'flex';
 
         filmTitle.value = data.value.find(movie => movie.id == currentId).title;
+        filmDescription.value = data.value.find(movie => movie.id == currentId).description;
+        filmReleaseDate.value = data.value.find(movie => movie.id == currentId).releaseDate;
+        filmDuration.value = data.value.find(movie => movie.id == currentId).duration;
         editedMovieId.value = currentId;
     }
 
@@ -47,12 +53,19 @@
         document.querySelector('.form-container').style.display = 'none';
         editedMovieId.value = '';
         filmTitle.value = '';
+        filmDescription.value = '';
+        filmReleaseDate.value = '';
+        filmDuration.value = '';
     }
 
     function editMovieTitle(movieId) {
         axios.patch(`http://127.0.0.1:8000/api/movies/${movieId}`, {
-            title: filmTitle.value
-        }, {
+            title: filmTitle.value,
+            description: filmDescription.value,
+            releaseDate: filmReleaseDate.value,
+            duration: filmDuration.value
+        },
+        {
             headers: {
                 'Content-Type': 'application/merge-patch+json'
             }
@@ -72,8 +85,8 @@
 <template>
     <section>
         <h1>Films</h1>
-        <input type="text" v-model="recherche">
-        <button @click="filtrerPays()">Rechercher</button>
+        <input class="form-input max" type="text" v-model="recherche">
+        <!-- <button class="btn" @click="filtrerPays()">Rechercher</button> -->
         <div class="film-list-item" v-for="movie in data" :key="movie.id">
             <router-link :to="`/movies/${movie.id}`">
                 {{ movie.title }} <br>
@@ -92,6 +105,27 @@
                     name="title"
                     id="title"
                     v-model="filmTitle"
+                >
+                <input 
+                    class="form-input"
+                    type="text"
+                    name="description"
+                    id="description"
+                    v-model="filmDescription"
+                >
+                <input 
+                    class="form-input"
+                    type="text"
+                    name="releaseDate"
+                    id="releaseDate"
+                    v-model="filmReleaseDate"
+                >
+                <input 
+                    class="form-input"
+                    type="text"
+                    name="duration"
+                    id="duration"
+                    v-model="filmDuration"
                 >
                 <button type="submit" class="btn">
                     Modifier

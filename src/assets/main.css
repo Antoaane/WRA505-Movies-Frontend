@@ -173,3 +173,7 @@ form {
 .cross:hover .cross-path {
   fill: white;
 }
+
+.max {
+  max-width: 400px;
+}

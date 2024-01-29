@@ -30,6 +30,7 @@
     let editedActorId = ref('');
     let actorFirstName = ref('');
 
+
     function filtrerPays() {
         if (dataFull.value) {
             data.value = dataFull.value.filter(actor => actor.title.toLowerCase().includes(recherche.value.toLowerCase()));
@@ -71,9 +72,9 @@
 
 <template>
     <section>
-        <h1>Films</h1>
-        <input type="text" v-model="recherche">
-        <button @click="filtrerPays()">Rechercher</button>
+        <h1>Actors</h1>
+        <input class="form-input" type="text" v-model="recherche">
+        <!-- <button @click="filtrerPays()">Rechercher</button> -->
         <div class="film-list-item" v-for="actor in data" :key="actor.id">
             <router-link :to="`/actors/${actor.id}`">
                 {{ actor.firstName }} <br>

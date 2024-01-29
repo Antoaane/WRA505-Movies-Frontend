@@ -11,8 +11,8 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/actors">Actors</RouterLink>
     </nav>
     <nav class="connexion">
-      <RouterLink to="/login">Login</RouterLink>
-      <RouterLink to="/register">Register</RouterLink>
+      <RouterLink to="/">Login</RouterLink>
+      <RouterLink to="/">Register</RouterLink>
     </nav>
   </header>
 
