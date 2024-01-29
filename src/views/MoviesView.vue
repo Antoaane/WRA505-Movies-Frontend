@@ -23,7 +23,7 @@
     console.log(data);
 
     watch(recherche, () => {
-        filtrerPays();
+        searchFilm();
     });
 
 
@@ -33,7 +33,7 @@
     let filmReleaseDate = ref('');
     let filmDuration = ref('');
 
-    function filtrerPays() {
+    function searchFilm() {
         if (dataFull.value) {
             data.value = dataFull.value.filter(movie => movie.title.toLowerCase().includes(recherche.value.toLowerCase()));
         }
@@ -58,7 +58,7 @@
         filmDuration.value = '';
     }
 
-    function editMovieTitle(movieId) {
+    function editMovie(movieId) {
         axios.patch(`http://127.0.0.1:8000/api/movies/${movieId}`, {
             title: filmTitle.value,
             description: filmDescription.value,
@@ -86,7 +86,7 @@
     <section>
         <h1>Films</h1>
         <input class="form-input max" type="text" v-model="recherche">
-        <!-- <button class="btn" @click="filtrerPays()">Rechercher</button> -->
+        <!-- <button class="btn" @click="searchFilm()">Rechercher</button> -->
         <div class="film-list-item" v-for="movie in data" :key="movie.id">
             <router-link :to="`/movies/${movie.id}`">
                 {{ movie.title }} <br>
@@ -98,7 +98,7 @@
             </button>
         </div>
         <div class="form-container">
-            <form @submit.prevent="editMovieTitle(editedMovieId)">
+            <form @submit.prevent="editMovie(editedMovieId)">
                 <input 
                     class="form-input"
                     type="text"

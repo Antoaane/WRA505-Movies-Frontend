@@ -6,7 +6,7 @@
     let recherche = ref('');
     let dataFull = ref('');
 
-    async function getFilms() {
+    async function getActors() {
         const response = await axios.get('http://127.0.0.1:8000/api/actors', {
             headers: {
                 'Accept': 'application/json'
@@ -17,21 +17,23 @@
     }
 
     onMounted(() => {
-        getFilms();
+        getActors();
     });
 
     console.log(data);
 
     watch(recherche, () => {
-        filtrerPays();
+        searchActor();
     });
 
 
     let editedActorId = ref('');
     let actorFirstName = ref('');
+    let actorLastName = ref('');
+    let actorNationality = ref('');
 
 
-    function filtrerPays() {
+    function searchActor() {
         if (dataFull.value) {
             data.value = dataFull.value.filter(actor => actor.title.toLowerCase().includes(recherche.value.toLowerCase()));
         }
@@ -40,7 +42,9 @@
     function formShow(currentId) {
         document.querySelector('.form-container').style.display = 'flex';
 
-        actorFirstName.value = data.value.find(actor => actor.id == currentId).title;
+        actorFirstName.value = data.value.find(actor => actor.id == currentId).firstName;
+        actorLastName.value = data.value.find(actor => actor.id == currentId).lastName;
+        actorNationality.value = data.value.find(actor => actor.id == currentId).nationalite;
         editedActorId.value = currentId;
     }
 
@@ -48,11 +52,14 @@
         document.querySelector('.form-container').style.display = 'none';
         editedActorId.value = '';
         actorFirstName.value = '';
+        actorLastName.value = '';
+        actorNationality.value = '';
     }
 
-    function editActorTitle(actorId) {
+    function editActor(actorId) {
         axios.patch(`http://127.0.0.1:8000/api/actors/${actorId}`, {
-            title: actorFirstName.value
+            firstName: actorFirstName.value,
+            lastName: actorLastName.value,
         }, {
             headers: {
                 'Content-Type': 'application/merge-patch+json'
@@ -60,7 +67,7 @@
         })
         .then(function (response) {
             console.log(response);
-            getFilms();
+            getActors();
         })
         .catch(function (error) {
             console.log(error);
@@ -74,7 +81,7 @@
     <section>
         <h1>Actors</h1>
         <input class="form-input" type="text" v-model="recherche">
-        <!-- <button @click="filtrerPays()">Rechercher</button> -->
+        <!-- <button @click="searchActor()">Rechercher</button> -->
         <div class="film-list-item" v-for="actor in data" :key="actor.id">
             <router-link :to="`/actors/${actor.id}`">
                 {{ actor.firstName }} <br>
@@ -85,13 +92,27 @@
             </button>
         </div>
         <div class="form-container">
-            <form @submit.prevent="editActorTitle(editedActorId)">
+            <form @submit.prevent="editActor(editedActorId)">
                 <input 
                     class="form-input"
                     type="text"
                     name="title"
                     id="title"
                     v-model="actorFirstName"
+                >
+                <input 
+                    class="form-input"
+                    type="text"
+                    name="description"
+                    id="description"
+                    v-model="actorLastName"
+                >
+                <input 
+                    class="form-input"
+                    type="text"
+                    name="releaseDate"
+                    id="releaseDate"
+                    v-model="actorNationality"
                 >
                 <button type="submit" class="btn">
                     Modifier
