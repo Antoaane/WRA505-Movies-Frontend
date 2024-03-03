@@ -1,10 +1,16 @@
 <script setup>
     import { onMounted, ref, watch } from 'vue';
+    import { useRoute } from 'vue-router';
     import axios from 'axios';
-
+    
     let data = ref('');
+    let dataTmp = ref([])
     let recherche = ref('');
     let dataFull = ref('');
+    let moviesUrl = ref('');
+
+    const route = useRoute();
+
 
     async function getFilms() {
         const response = await axios.get('http://127.0.0.1:8000/api/movies', {
@@ -16,8 +22,36 @@
         dataFull.value = response.data;
     }
 
+    async function getCotageyFilms() {
+        const response = await axios.get(`http://127.0.0.1:8000/api/categories/${route.params.id}`, {
+            headers: {
+                'Accept': 'application/json'
+            }
+        });
+        moviesUrl = response.data.movies;
+
+        // foreach movie in data, get the movie
+        moviesUrl.forEach(async movieUrl => {
+            const moviesResponse = await axios.get(`http://127.0.0.1:8000${movieUrl}`, {
+                headers: {
+                    'Accept': 'application/json'
+                }
+            });
+            dataTmp.value.push(moviesResponse.data);
+            data.value = dataTmp.value;
+        });
+
+        console.log('datas : ', data);
+    }
+
     onMounted(() => {
-        getFilms();
+        console.log('props :', route.params.id);
+
+        if (!route.params.id) {
+            getFilms();
+        } else {
+            getCotageyFilms();
+        }
     });
 
     console.log(data);

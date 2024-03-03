@@ -43,6 +43,12 @@ const router = createRouter({
       component: CategoriesView
     },
     {
+      path: '/categories/:id',
+      name: 'categories-movies',
+      component: MoviesView,
+      props: true
+    },
+    {
       path: '/actors',
       name: 'actors',
       component: ActorsView
