@@ -1,19 +1,28 @@
 <script setup>
     import { onMounted, ref, watch } from 'vue';
+    import { useRouter } from 'vue-router';
     import axios from 'axios';
 
     let data = ref('');
     let recherche = ref('');
     let dataFull = ref('');
 
+    const router = useRouter();
+
     async function getActors() {
         const response = await axios.get('http://127.0.0.1:8000/api/actors', {
             headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
             }
+        })
+        .then(function (response) {
+            data.value = response.data;
+            dataFull.value = response.data;
+        })
+        .catch(function (error) {
+            router.push('/login');
         });
-        data.value = response.data;
-        dataFull.value = response.data;
     }
 
     onMounted(() => {
@@ -80,7 +89,7 @@
 <template>
     <section>
         <h1>Actors</h1>
-        <input class="form-input" type="text" v-model="recherche">
+        <input class="form-input max" type="text" v-model="recherche">
         <!-- <button @click="searchActor()">Rechercher</button> -->
         <div class="film-list-item" v-for="actor in data" :key="actor.id">
             <router-link :to="`/actors/${actor.id}`">

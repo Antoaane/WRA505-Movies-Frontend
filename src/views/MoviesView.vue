@@ -1,6 +1,6 @@
 <script setup>
     import { onMounted, ref, watch } from 'vue';
-    import { useRoute } from 'vue-router';
+    import { useRoute,useRouter } from 'vue-router';
     import axios from 'axios';
     
     let data = ref('');
@@ -10,21 +10,30 @@
     let moviesUrl = ref('');
 
     const route = useRoute();
-
+    const router = useRouter();
 
     async function getFilms() {
         const response = await axios.get('http://127.0.0.1:8000/api/movies', {
             headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
             }
+        })
+        .then(function (response) {
+            data.value = response.data;
+            dataFull.value = response.data;
+        })
+        .catch(function (error) {
+            router.push('/login');
         });
-        data.value = response.data;
-        dataFull.value = response.data;
     }
+
+    console.log('code :', data);
 
     async function getCotageyFilms() {
         const response = await axios.get(`http://127.0.0.1:8000/api/categories/${route.params.id}`, {
             headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
             }
         });
@@ -34,14 +43,17 @@
         moviesUrl.forEach(async movieUrl => {
             const moviesResponse = await axios.get(`http://127.0.0.1:8000${movieUrl}`, {
                 headers: {
+                    'Authorization': 'Bearer ' + localStorage.getItem('token'),
                     'Accept': 'application/json'
                 }
             });
             dataTmp.value.push(moviesResponse.data);
             data.value = dataTmp.value;
-        });
 
-        console.log('datas : ', data);
+            if (data.code == 401) {
+                router.push('/login');
+            }
+        });
     }
 
     onMounted(() => {
@@ -53,8 +65,6 @@
             getCotageyFilms();
         }
     });
-
-    console.log(data);
 
     watch(recherche, () => {
         searchFilm();
@@ -101,6 +111,7 @@
         },
         {
             headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Content-Type': 'application/merge-patch+json'
             }
         })

@@ -1,5 +1,17 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
+
+let isConnected = false;
+
+if (localStorage.getItem('token')) {
+  isConnected = true;
+}
+
+function logout() {
+  localStorage.removeItem('token');
+  location.reload();
+}
+
 </script>
 
 <template>
@@ -11,7 +23,8 @@ import { RouterLink, RouterView } from 'vue-router'
       <RouterLink to="/actors">Actors</RouterLink>
     </nav>
     <nav class="connexion">
-      <RouterLink to="/">Login</RouterLink>
+      <button class="btn" v-if="isConnected" @click="logout()">Logout</button>
+      <RouterLink class="btn" v-else to="/login">Login</RouterLink>
     </nav>
   </header>
 
