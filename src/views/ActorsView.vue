@@ -73,6 +73,7 @@
             lastName: actorLastName.value,
         }, {
             headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Content-Type': 'application/merge-patch+json'
             }
         })

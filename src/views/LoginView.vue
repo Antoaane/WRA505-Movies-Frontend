@@ -26,10 +26,10 @@
 </script>
 
 <template> 
-    <div>
-        <h1>Login</h1>
-        <input type="text" v-model="email" placeholder="E-mail">
-        <input type="password" v-model="password" placeholder="Password">
-        <button @click="login()">Login</button>
+    <div class="w-72 my-20 mx-auto flex flex-col">
+        <h1 class="title">Login</h1>
+        <input class="form-input !w-full" type="text" v-model="email" placeholder="E-mail">
+        <input class="form-input !w-full" type="password" v-model="password" placeholder="Password">
+        <button class="btn" @click="login()">Login</button>
     </div>
 </template>

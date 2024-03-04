@@ -33,7 +33,7 @@
 <template>
     <section>
         <h1>Catégories</h1>
-        <div class="film-list-item" v-for="category in data" :key="category.id">
+        <div class="button film-list-item" v-for="category in data" :key="category.id">
             <router-link :to="`/categories/${category.id}`">
                 {{ category.name }} <br>
             </router-link>

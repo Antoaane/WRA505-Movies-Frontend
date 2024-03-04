@@ -1,78 +1,82 @@
 <script setup>
 import { onMounted, ref } from 'vue';
 import axios from 'axios';
-import { useRoute,useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 
 const baseUrl = import.meta.env.VITE_BASE_URL;
-
-const actor = ref(null);
-const movies = ref(null);
-const nationalite = ref(null);
 
 const route = useRoute();
 const router = useRouter();
 
+let data = ref('');
+let nationalite = ref('');
+let movies = ref([]);
+let moviesUrls = ref([]);
+
 onMounted(async () => {
     const actorId = route.params.id;
     console.log(actorId);
-    const actorsResponse = await axios.get(`${baseUrl}/api/actors/${actorId}`, {
+    await axios.get(`${baseUrl}/api/actors/${actorId}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json'
         }
     })
     .then(function (response) {
-        actor.value = actorsResponse.data;
+        data.value = response.data;
     })
     .catch(function (error) {
         router.push('/login');
     });
 
-    const nationaliteResponse = await axios.get(`${baseUrl}${actor.value.nationalite}`, {
+    await axios.get(`${baseUrl}${data.value.nationalite}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json'
         }
     })
     .then(function (response) {
-        nationalite.value = nationaliteResponse.data.nationalite;
+        nationalite.value = response.data.nationalite;
     })
     .catch(function (error) {
         router.push('/login');
     });
-    
-    actor.movies.forEach(async movie => {
-        const moviesResponse = await axios.get(`${baseUrl}${movie}`, {
+
+    moviesUrls.value = data.value.movies;
+
+    console.log(moviesUrls);
+
+    moviesUrls.value.forEach(async movieUrls => {
+        await axios.get(`${baseUrl}${movieUrls}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
             }
         })
         .then(function (response) {
-            movies.value.push(moviesResponse.data.title);
+            movies.value.push(response.data);
         })
         .catch(function (error) {
+            console.log(error);
             router.push('/login');
         });
     });
-
-    console.log(movies);
-
-    console.log(movies.value);
-    console.log(nationalite.value);
-    
-    movies.value = movies.value.filter(movie => movie.actors.find(actor => actor.id == actorId));
-
-    console.log(movies.value);
 });
 </script>
 
 <template>
-    <div class="actor-card" v-if="actor">
-        <h2>{{ actor.title }}</h2>
-        <p>Prénom: {{ actor.firstName }}</p>
-        <p>Nom: {{ actor.lastName }}</p>
-        <p>Nationalité: {{ nationalite }}</p>
-        <p>Films: {{ movies }}</p>
+    <div class="actor-card" v-if="data">
+        <h2>{{ data.title }}</h2>
+        <p>First name : {{ data.firstName }}</p>
+        <p>Last name : {{ data.lastName }}</p>
+        <p>Nationality : {{ nationalite }}</p>
+        <div class="rounded-xl bg-slate-500 m-10 p-10">
+            <p class="text-center">Films</p>
+            <ul>
+                <li v-for="movie in movies" :key="movie.id">
+                    {{ movie.title }}
+                </li>
+            </ul>
+        </div>
     </div>
 </template>
