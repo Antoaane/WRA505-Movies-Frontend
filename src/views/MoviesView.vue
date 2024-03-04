@@ -2,6 +2,8 @@
     import { onMounted, ref, watch } from 'vue';
     import { useRoute,useRouter } from 'vue-router';
     import axios from 'axios';
+    
+    const baseUrl = import.meta.env.VITE_BASE_URL;
 
     const route = useRoute();
     const router = useRouter();
@@ -42,7 +44,7 @@
     });
 
     async function getFilms() {
-        const response = await axios.get('http://127.0.0.1:8000/api/movies', {
+        const response = await axios.get(`${baseUrl}/api/movies`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
@@ -58,7 +60,7 @@
     }
 
     async function getCategories() {
-        const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+        const response = await axios.get(`${baseUrl}/api/categories`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
@@ -73,7 +75,7 @@
     }
 
     async function getActors() {
-        const response = await axios.get('http://127.0.0.1:8000/api/actors', {
+        const response = await axios.get(`${baseUrl}/api/actors`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
@@ -88,7 +90,7 @@
     }
 
     async function getCotageyFilms() {
-        const response = await axios.get(`http://127.0.0.1:8000/api/categories/${route.params.id}`, {
+        const response = await axios.get(`${baseUrl}/api/categories/${route.params.id}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
@@ -97,7 +99,7 @@
         moviesUrl = response.data.movies;
 
         moviesUrl.forEach(async movieUrl => {
-            const moviesResponse = await axios.get(`http://127.0.0.1:8000${movieUrl}`, {
+            const moviesResponse = await axios.get(`${baseUrl}${movieUrl}`, {
                 headers: {
                     'Authorization': 'Bearer ' + localStorage.getItem('token'),
                     'Accept': 'application/json'
@@ -155,7 +157,7 @@
 
         console.log(JSON.stringify(newData));
 
-        axios.post('http://127.0.0.1:8000/api/movies', newData,
+        axios.post(`${baseUrl}/api/movies`, newData,
         {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'), 
@@ -174,7 +176,7 @@
     }
 
     function editMovie(movieId) {
-        axios.patch(`http://127.0.0.1:8000/api/movies/${movieId}`, {
+        axios.patch(`${baseUrl}/api/movies/${movieId}`, {
             title: newFilmTitle.value,
             description: newFilmDescription.value,
             releaseDate: newFilmReleaseDate.value,
@@ -198,7 +200,7 @@
     }
 
     function deleteMovie(movieId) {
-        axios.delete(`http://127.0.0.1:8000/api/movies/${movieId}`, {
+        axios.delete(`${baseUrl}/api/movies/${movieId}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token')
             }
