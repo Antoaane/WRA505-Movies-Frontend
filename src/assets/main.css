@@ -133,7 +133,6 @@ a:hover {
 
 form {
   width: 20rem;
-  height: 20rem;
   padding: 1rem;
 
   display: flex;
@@ -157,12 +156,13 @@ form {
   color: rgb(78, 127, 131);
 }
 .cross {
-  width: 1.5rem;
-  padding: 0.25rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0.5rem;
   
   position: fixed;
-  top: calc(50% - 12rem);
-  left: calc(50% + 10rem);
+  top: 3rem;
+  right: 3rem;
 
   background-color: #fff;
   border: none;
