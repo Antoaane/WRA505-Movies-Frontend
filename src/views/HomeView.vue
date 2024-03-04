@@ -2,11 +2,13 @@
     import { onMounted, ref } from 'vue'
     import axios from 'axios'
 
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+
     let dataMovies = ref('')
     let dataActors = ref('')
 
     onMounted(async () => {
-      await axios.get('http://127.0.0.1:8000/api/movies', {
+      await axios.get(`${baseUrl}/api/movies`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Accept': 'application/json'
@@ -19,7 +21,7 @@
         console.log(error)
       });
 
-      await axios.get('http://127.0.0.1:8000/api/actors', {
+      await axios.get(`${baseUrl}/api/actors`, {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Accept': 'application/json'

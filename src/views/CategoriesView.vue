@@ -1,13 +1,15 @@
 <script setup>
-    import { onMounted, ref, watch } from 'vue';
+    import { onMounted, ref } from 'vue';
     import { useRouter } from 'vue-router';
     import axios from 'axios';
+
+    const baseUrl = import.meta.env.VITE_BASE_URL;
 
     let data = ref('');
     const router = useRouter();
 
     async function getCategories() {
-        const response = await axios.get('http://127.0.0.1:8000/api/categories', {
+        const response = await axios.get(`${baseUrl}/api/categories`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'

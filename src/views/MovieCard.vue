@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRoute, useRouter } from 'vue-router';
 
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 const data = ref(null);
 const route = useRoute();
 const router = useRouter();
@@ -10,7 +12,7 @@ const router = useRouter();
 onMounted(async () => {
     const movieId = route.params.id;
     console.log(movieId);
-    const response = await axios.get(`http://127.0.0.1:8000/api/movies/${movieId}`, {
+    const response = await axios.get(`${baseUrl}/api/movies/${movieId}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json'

@@ -3,6 +3,8 @@ import { onMounted, ref } from 'vue';
 import axios from 'axios';
 import { useRoute,useRouter } from 'vue-router';
 
+const baseUrl = import.meta.env.VITE_BASE_URL;
+
 const actor = ref(null);
 const movies = ref(null);
 const nationalite = ref(null);
@@ -13,7 +15,7 @@ const router = useRouter();
 onMounted(async () => {
     const actorId = route.params.id;
     console.log(actorId);
-    const actorsResponse = await axios.get(`http://127.0.0.1:8000/api/actors/${actorId}`, {
+    const actorsResponse = await axios.get(`${baseUrl}/api/actors/${actorId}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json'
@@ -26,7 +28,7 @@ onMounted(async () => {
         router.push('/login');
     });
 
-    const nationaliteResponse = await axios.get(`http://127.0.0.1:8000${actor.value.nationalite}`, {
+    const nationaliteResponse = await axios.get(`${baseUrl}${actor.value.nationalite}`, {
         headers: {
             'Authorization': 'Bearer ' + localStorage.getItem('token'),
             'Accept': 'application/json'
@@ -40,7 +42,7 @@ onMounted(async () => {
     });
     
     actor.movies.forEach(async movie => {
-        const moviesResponse = await axios.get(`http://127.0.0.1:8000${movie}`, {
+        const moviesResponse = await axios.get(`${baseUrl}${movie}`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'

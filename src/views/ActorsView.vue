@@ -3,6 +3,8 @@
     import { useRouter } from 'vue-router';
     import axios from 'axios';
 
+    const baseUrl = import.meta.env.VITE_BASE_URL;
+
     let data = ref('');
     let recherche = ref('');
     let dataFull = ref('');
@@ -10,7 +12,7 @@
     const router = useRouter();
 
     async function getActors() {
-        const response = await axios.get('http://127.0.0.1:8000/api/actors', {
+        const response = await axios.get(`${baseUrl}/api/actors`, {
             headers: {
                 'Authorization': 'Bearer ' + localStorage.getItem('token'),
                 'Accept': 'application/json'
@@ -66,7 +68,7 @@
     }
 
     function editActor(actorId) {
-        axios.patch(`http://127.0.0.1:8000/api/actors/${actorId}`, {
+        axios.patch(`${baseUrl}/api/actors/${actorId}`, {
             firstName: actorFirstName.value,
             lastName: actorLastName.value,
         }, {
