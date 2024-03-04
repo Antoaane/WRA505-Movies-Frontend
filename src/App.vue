@@ -1,11 +1,7 @@
 <script setup>
 import { RouterLink, RouterView } from 'vue-router'
 
-let isConnected = false;
-
-if (localStorage.getItem('token')) {
-  isConnected = true;
-}
+let isConnected = localStorage.getItem('token');
 
 function logout() {
   localStorage.removeItem('token');

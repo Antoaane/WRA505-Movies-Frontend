@@ -18,8 +18,7 @@
             alert('Mauvais identifiants');
         } else {
             localStorage.setItem('token', data.value.token);
-            router.push('/');
-            location.reload();
+            location.reload().then(router.push('/'));
         }
     }
 </script>

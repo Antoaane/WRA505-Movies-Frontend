@@ -5,33 +5,31 @@
     let dataMovies = ref('')
     let dataActors = ref('')
 
-    console.log(localStorage.getItem('token'))
-
     onMounted(async () => {
-      const responseMovies = await axios.get('http://127.0.0.1:8000/api/movies', {
+      await axios.get('http://127.0.0.1:8000/api/movies', {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Accept': 'application/json'
         }
       })
       .then(function (response) {
-        dataMovies.value = responseMovies.data
+        dataMovies.value = response.data
       })
       .catch(function (error) {
-        router.push('/login');
+        console.log(error)
       });
 
-      const responseActors = await axios.get('http://127.0.0.1:8000/api/actors', {
+      await axios.get('http://127.0.0.1:8000/api/actors', {
         headers: {
           'Authorization': 'Bearer ' + localStorage.getItem('token'),
           'Accept': 'application/json'
         }
       })
       .then(function (response) {
-        dataActors.value = responseActors.data
+        dataActors.value = response.data
       })
       .catch(function (error) {
-        router.push('/login');
+        console.log(error)
       });
     })
 </script> 

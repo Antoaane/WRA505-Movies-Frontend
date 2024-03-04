@@ -197,6 +197,21 @@
         formHide();
     }
 
+    function deleteMovie(movieId) {
+        axios.delete(`http://127.0.0.1:8000/api/movies/${movieId}`, {
+            headers: {
+                'Authorization': 'Bearer ' + localStorage.getItem('token')
+            }
+        })
+        .then(function (response) {
+            console.log(response);
+            getFilms();
+        })
+        .catch(function (error) {
+            alert('Erreur lors de la suppression');
+        });
+    }
+
     function formHide() {
         document.querySelector('.edit').style.display = 'none';
         document.querySelector('.add').style.display = 'none';
@@ -226,15 +241,20 @@
         <pre>
             {{ newFilm }}
         </pre>
-        <div class="film-list-item" v-for="movie in data" :key="movie.id">
+        <div class="film-list-item flex" v-for="movie in data" :key="movie.id">
             <router-link :to="`/movies/${movie.id}`">
                 {{ movie.title }} <br>
                 {{ movie.description }} <br>
                 {{ movie.releaseDate }} <br>
             </router-link>
-            <button class="btn" @click="editFormShow(movie.id)">
-                modifier
-            </button>
+            <div class="flex flex-col">
+                <button class="btn" @click="editFormShow(movie.id)">
+                    modifier
+                </button>
+                <button class="btn" @click="deleteMovie(movie.id)">
+                    supprimer
+                </button>
+            </div>
         </div>
         <div class="add form-container">
             <form @submit.prevent="addMovie()">
