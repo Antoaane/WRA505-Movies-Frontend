@@ -13,14 +13,14 @@ function logout() {
 <template>
   <header>
     <nav class="navigation">
-      <RouterLink to="/">Home</RouterLink>
-      <RouterLink to="/movies">Movies</RouterLink>
-      <RouterLink to="/categories">Categories</RouterLink>
-      <RouterLink to="/actors">Actors</RouterLink>
+      <RouterLink class="button" to="/">Home</RouterLink>
+      <RouterLink class="button" to="/movies">Movies</RouterLink>
+      <RouterLink class="button" to="/categories">Categories</RouterLink>
+      <RouterLink class="button" to="/actors">Actors</RouterLink>
     </nav>
     <nav class="connexion">
-      <button class="btn" v-if="isConnected" @click="logout()">Logout</button>
-      <RouterLink class="btn" v-else to="/login">Login</RouterLink>
+      <button class="text-white button" v-if="isConnected" @click="logout()">Logout</button>
+      <RouterLink class="button" v-else to="/login">Login</RouterLink>
     </nav>
   </header>
 

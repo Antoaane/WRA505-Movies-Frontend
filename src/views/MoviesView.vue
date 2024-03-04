@@ -242,7 +242,7 @@
             {{ newFilm }}
         </pre>
         <div class="film-list-item flex" v-for="movie in data" :key="movie.id">
-            <router-link :to="`/movies/${movie.id}`">
+            <router-link class="button m-1" :to="`/movies/${movie.id}`">
                 {{ movie.title }} <br>
                 {{ movie.description }} <br>
                 {{ movie.releaseDate }} <br>

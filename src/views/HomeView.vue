@@ -41,7 +41,7 @@
         <h1>Home</h1>
         <h2>Movies</h2>
 
-        <router-link :to="`/movies/${movie.id}`" v-for="movie in dataMovies.slice(0, 4)" :key="movie.id">
+        <router-link class="button film-list-item m-1" :to="`/movies/${movie.id}`" v-for="movie in dataMovies.slice(0, 4)" :key="movie.id">
           {{ movie.title }} <br>
           {{ movie.description }} <br>
           {{ movie.releaseDate }} <br>
@@ -49,7 +49,7 @@
 
         <h2>Actors</h2>
         
-        <router-link :to="`/actors/${actor.id}`" v-for="actor in dataActors.slice(0, 4)" :key="actor.id">
+        <router-link class="button film-list-item m-1" :to="`/actors/${actor.id}`" v-for="actor in dataActors.slice(0, 4)" :key="actor.id">
           {{ actor.firstName }} <br>
           {{ actor.lastName }} <br>
           {{ actor.nationalite }} <br>
