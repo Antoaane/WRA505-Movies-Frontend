@@ -1,28 +1,38 @@
-# WRA506-Project-2
+# WR506 / Movie Frontend / Antoine LAUZIS / 2024
 
-This template should help get you started developing with Vue 3 in Vite.
+## IDE Recommandé
 
-## Recommended IDE Setup
-
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
-
+[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (désactiver Vetur)
 ## Customize configuration
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+Voir [Configuration Vite](https://vitejs.dev/config/).
 
-## Project Setup
+## Initialisation du Projet
+
+### Clonage du Projet
+
+```sh
+git clone https://github.com/Antoaane/WRA505-Movies-Frontend
+```
+### Installation des dépendances
 
 ```sh
 npm install
 ```
 
-### Compile and Hot-Reload for Development
+### Lancer le serveur de développement (Hot Reload)
 
 ```sh
 npm run dev
 ```
 
-### Compile and Minify for Production
+### Lancer paralellement l'observation de changements TailwindCSS (Hot Reload) 
+
+```sh
+npm run watch
+```
+
+### Build pour la production
 
 ```sh
 npm run build
